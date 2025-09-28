@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import socket from "./socket";
 import Scoreboard from "./components/Scoreboard";
-import SimpleLudoBoard from "./components/SimpleLudoBoard";
+import ImprovedLudoBoard from "./components/ImprovedLudoBoard";
 
 function App() {
   const [scores, setScores] = useState({});
@@ -36,34 +36,49 @@ function App() {
 
   if (!gameStarted && playerCount < 2) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
-        <div className="bg-white rounded-xl shadow-2xl p-8 text-center max-w-md">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">🎲 Ludo Game</h1>
-          <div className="mb-6">
-            <div className="text-6xl mb-4">⏳</div>
-            <h2 className="text-xl font-semibold text-gray-700 mb-2">Waiting for Players...</h2>
-            <p className="text-gray-600">
-              Players in room: <span className="font-bold text-blue-600">{playerCount}</span>
-            </p>
-            <p className="text-sm text-gray-500 mt-2">Need at least 2 players to start</p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+        <div className="bg-white rounded-3xl shadow-2xl p-10 text-center max-w-lg border-4 border-gray-200">
+          <h1 className="text-6xl font-bold text-gray-800 mb-8">🎲 LUDO GAME</h1>
+
+          <div className="mb-8">
+            <div className="text-8xl mb-6 animate-bounce">⏳</div>
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">Waiting for Players...</h2>
+
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl p-4 mb-4">
+              <p className="text-lg text-gray-700">
+                Players in room: <span className="font-bold text-blue-600 text-2xl">{playerCount}/4</span>
+              </p>
+              <p className="text-sm text-gray-500 mt-2">Need at least 2 players to start</p>
+            </div>
+
+            {/* Color indicators for traditional Ludo */}
+            <div className="flex justify-center gap-3 mb-6">
+              <div className="w-8 h-8 bg-red-500 rounded-full border-2 border-white shadow-lg"></div>
+              <div className="w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
+              <div className="w-8 h-8 bg-yellow-500 rounded-full border-2 border-white shadow-lg"></div>
+              <div className="w-8 h-8 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
+            </div>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4 mb-4">
-            <p className="text-sm text-gray-600 mb-2">Your Player ID:</p>
-            <p className="font-mono font-bold text-purple-600">{playerId}</p>
+          <div className="bg-gray-50 rounded-xl p-6 mb-6 border-2 border-gray-100">
+            <p className="text-sm text-gray-600 mb-3">🎮 Your Player Info:</p>
+            <div className="bg-white rounded-lg p-3 border border-gray-200">
+              <p className="font-mono text-sm text-purple-600 break-all">{playerId}</p>
+            </div>
           </div>
 
           {playerCount >= 2 && (
             <button
               onClick={startGame}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200"
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg text-lg"
             >
-              Start Game! 🚀
+              🚀 START GAME!
             </button>
           )}
 
-          <div className="mt-6 text-xs text-gray-500">
-            <p>Share this room ID with friends: <span className="font-bold">{roomId}</span></p>
+          <div className="mt-8 bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <p className="text-sm text-amber-700 mb-2">📤 Invite Friends:</p>
+            <p className="text-sm font-bold text-amber-800">Room ID: <span className="bg-white px-2 py-1 rounded border">{roomId}</span></p>
           </div>
         </div>
       </div>
@@ -72,8 +87,8 @@ function App() {
 
   return (
     <div>
-      <SimpleLudoBoard roomId={roomId} playerId={playerId} />
-      <div className="fixed top-4 right-4">
+      <ImprovedLudoBoard roomId={roomId} playerId={playerId} />
+      <div className="fixed top-4 right-4 z-10">
         <Scoreboard scores={scores} captures={captures} />
       </div>
     </div>
